@@ -3,8 +3,10 @@
     <h2 class="breed-name">
       {{ breed.name }}
     </h2>
-    <img v-if="breed.imageUrl" :src="breed.imageUrl" class="breed-photo">
-    <img v-else src="/images/loading.gif" class="breed-photo">
+    <nuxt-link :to="`/breed/${breed.id}`">
+      <img v-if="breed.images && breed.images.length" :src="breed.images[0].url" class="breed-photo">
+      <img v-else src="/images/loading.gif" class="breed-photo">
+    </nuxt-link>
     <div class="description">
       <div class="breed-group">
         <span>Group:</span>

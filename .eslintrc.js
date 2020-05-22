@@ -18,5 +18,7 @@ module.exports = {
     'vue'
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    '@typescript-eslint/no-non-null-assertion': 0
+  }
 }

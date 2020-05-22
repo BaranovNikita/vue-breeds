@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "lib": [
       "esnext",
@@ -25,7 +25,8 @@
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": false,
-    "importHelpers": true
+    "importHelpers": true,
+    "strictNullChecks": false
   },
   "exclude": [
     "node_modules"

@@ -1,12 +1,12 @@
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
-import { Breed } from '~/types'
+import { Breed, BreedImage } from '~/types'
 
-const getImage = (breedId: number) => {
+const getImages = (breedId: number, limit = 1) => {
   return $axios.$get('images/search', {
     params: {
       breed_id: breedId,
-      limit: 1
+      limit
     }
   })
 }
@@ -59,7 +59,6 @@ class BreedModule extends VuexModule {
     })
     this.setBreeds(breeds)
     this.setLoading(false)
-    await this.loadImages()
   }
 
   @Action
@@ -74,18 +73,24 @@ class BreedModule extends VuexModule {
     await this.getBreeds()
   }
 
-  @Action
-  async loadImages () {
-    const breeds = await Promise.all(this.breeds.map(async (breed) => {
-      const imgs = await getImage(breed.id)
-      const imageUrl = imgs.length ? imgs[0].url : ''
+  @Mutation
+  updateBreed ({ id, update }: { id: number, update: { [K in keyof Breed]?: any } }) {
+    const breedIdx = this.breeds.findIndex(breed => breed.id === id)
+    if (breedIdx > -1) {
+      this.breeds = [
+        ...this.breeds.slice(0, breedIdx),
+        { ...this.breeds[breedIdx], ...update },
+        ...this.breeds.slice(breedIdx + 1)
+      ]
+    }
+  }
 
-      return {
-        ...breed,
-        imageUrl
-      }
-    }))
-    this.setBreeds(breeds)
+  @Action
+  async loadImages (limit: number = 1) {
+    for (const breed of this.breeds) {
+      const images = await getImages(breed.id, limit) as BreedImage[]
+      this.updateBreed({ id: breed.id, update: { images } })
+    }
   }
 }
 

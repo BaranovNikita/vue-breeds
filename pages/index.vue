@@ -13,8 +13,15 @@ export default Vue.extend({
   components: {
     BreedList
   },
+  async fetch () {
+    await breedStore.getTotal()
+    await breedStore.getBreeds()
+  },
   computed: {
     breeds: () => breedStore.breeds
+  },
+  mounted () {
+    breedStore.loadImages()
   }
 })
 </script>

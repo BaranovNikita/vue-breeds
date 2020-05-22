@@ -4,7 +4,7 @@ import BreedModule from '~/store/breed'
 
 let breedStore: BreedModule
 
-function initialiseStores(store: Store<any>): void {
+function initialiseStores (store: Store<any>): void {
   breedStore = getModule(BreedModule, store)
 }
 

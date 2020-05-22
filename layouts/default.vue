@@ -4,18 +4,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import { breedStore } from '~/store'
-
-export default Vue.extend({
-  async fetch () {
-    await breedStore.getTotal()
-    await breedStore.getBreeds()
-  }
-})
-</script>
-
 <style>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
