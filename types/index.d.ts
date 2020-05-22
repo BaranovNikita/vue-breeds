@@ -3,7 +3,7 @@ interface ImageCategory {
   name: string
 }
 
-interface BreedImage {
+export interface BreedImage {
   id: string,
   url: string,
   width: number,
