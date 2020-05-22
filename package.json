@@ -5,7 +5,7 @@
   "author": "Никита Баранов <baranov.nikita@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "API_KEY=72c3c621-d73a-4273-a47e-3cd4a4bd28a3 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

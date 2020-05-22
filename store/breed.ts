@@ -92,6 +92,19 @@ class BreedModule extends VuexModule {
       this.updateBreed({ id: breed.id, update: { images } })
     }
   }
+
+  @Action
+  async loadBreed (id: number) {
+    this.setLoading(true)
+    try {
+      const breed = await $axios.$get(`/breeds/${id}`)
+      this.setBreeds([breed])
+    } catch (e) {
+      console.error(e)
+    } finally {
+      this.setLoading(false)
+    }
+  }
 }
 
 export default BreedModule
