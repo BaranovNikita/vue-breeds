@@ -44,7 +44,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { breedStore } from '~/utils/store-accessor'
-import { Breed } from '~/types'
 import Carousel from '~/components/breed/Carousel.vue'
 
 interface Computed {

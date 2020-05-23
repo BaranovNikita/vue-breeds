@@ -27,6 +27,10 @@ export default {
       font-size: 30px;
       color: white;
       text-decoration: none;
+      &:hover {
+        color: green;
+        transition: color .4s;
+      }
     }
     .favorite {
       color: white;

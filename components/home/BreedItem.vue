@@ -40,7 +40,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Breed } from '~/types'
 import Card from '~/components/shared/Card.vue'
 
 interface Props {

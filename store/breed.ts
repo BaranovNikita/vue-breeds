@@ -1,6 +1,5 @@
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
-import { Breed, BreedImage } from '~/types'
 
 const getImages = (breedId: number, limit = 1) => {
   return $axios.$get('images/search', {
@@ -10,6 +9,14 @@ const getImages = (breedId: number, limit = 1) => {
     }
   })
 }
+
+interface TotalSettings {
+  isSearch?: boolean,
+  text?: string,
+  isFavorite?: boolean
+}
+
+type Mode = 'search' | 'all' | 'single'
 
 @Module({
   name: 'breed',
@@ -22,6 +29,8 @@ class BreedModule extends VuexModule {
   page:number = 0
   total: number = 0
   loading: boolean = false
+  mode: Mode
+  searchWord: string = ''
 
   @Mutation
   setBreeds (breeds: Breed[]) {
@@ -48,6 +57,16 @@ class BreedModule extends VuexModule {
     this.loading = loading
   }
 
+  @Mutation
+  setMode (mode: Mode) {
+    this.mode = mode
+  }
+
+  @Mutation
+  setSearchWord (word: string) {
+    this.searchWord = word
+  }
+
   @Action
   async getBreeds () {
     this.setLoading(true)
@@ -70,7 +89,11 @@ class BreedModule extends VuexModule {
   @Action
   async changePage (page: number) {
     this.setPage(page - 1)
-    await this.getBreeds()
+    if (this.mode === 'all') {
+      await this.getBreeds()
+    } else {
+      await this.searchBreeds()
+    }
   }
 
   @Mutation
@@ -99,6 +122,26 @@ class BreedModule extends VuexModule {
     try {
       const breed = await $axios.$get(`/breeds/${id}`)
       this.setBreeds([breed])
+    } catch (e) {
+      console.error(e)
+    } finally {
+      this.setLoading(false)
+    }
+  }
+
+  @Action
+  async searchBreeds () {
+    this.setLoading(true)
+    try {
+      const breeds = await $axios.$get('/breeds/search', {
+        params: {
+          q: this.searchWord
+        }
+      })
+      const start = this.page * this.pageLimit
+      const end = start + this.pageLimit
+      this.setTotal(breeds.length)
+      this.setBreeds(breeds.slice(start, end))
     } catch (e) {
       console.error(e)
     } finally {

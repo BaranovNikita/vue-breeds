@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <search @change="searchChange" />
     <breed-list />
   </section>
 </template>
@@ -8,14 +9,26 @@
 import Vue from 'vue'
 import BreedList from '~/components/home/BreedList.vue'
 import { breedStore } from '~/store'
+import Search from '~/components/home/Search.vue'
+import { debounce } from '~/utils'
+
+const search = debounce(async () => {
+  await breedStore.searchBreeds()
+  breedStore.loadImages()
+}, 1000)
+
+const loadAll = async () => {
+  await breedStore.getTotal()
+  await breedStore.getBreeds()
+}
 
 export default Vue.extend({
   components: {
-    BreedList
+    BreedList,
+    Search
   },
   async asyncData () {
-    await breedStore.getTotal()
-    await breedStore.getBreeds()
+    await loadAll()
     return {}
   },
   computed: {
@@ -23,6 +36,20 @@ export default Vue.extend({
   },
   mounted () {
     breedStore.loadImages()
+  },
+  methods: {
+    async searchChange (val: string) {
+      if (val.trim()) {
+        breedStore.setSearchWord(val.trim())
+        breedStore.setPage(0)
+        breedStore.setMode('search')
+        search()
+      } else {
+        breedStore.setMode('all')
+        await loadAll()
+        breedStore.loadImages()
+      }
+    }
   }
 })
 </script>

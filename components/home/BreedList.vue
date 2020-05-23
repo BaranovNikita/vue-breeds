@@ -4,6 +4,7 @@
       <breed v-for="breed of breeds" :key="breed.id" :breed="breed" />
     </div>
     <pagination
+      v-if="total > pageLimit"
       :current-page="page + 1"
       :items-length="total"
       :page-limit="pageLimit"
@@ -18,7 +19,6 @@ import Vue from 'vue'
 import BreedItem from './BreedItem.vue'
 import Pagination from '~/components/shared/Pagination.vue'
 import { breedStore } from '~/utils/store-accessor'
-import { Breed } from '~/types'
 
 interface Computed {
   page: number,
@@ -64,7 +64,7 @@ export default Vue.extend<{}, Methods, Computed, {}>({
   .breeds {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
   }
   .content {
     padding-bottom: 50px;

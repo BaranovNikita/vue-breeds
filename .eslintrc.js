@@ -5,7 +5,10 @@ module.exports = {
     node: true
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+    extends: [
+      'plugin:@typescript-eslint/recommended' // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    ]
   },
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
