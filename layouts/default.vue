@@ -1,10 +1,22 @@
 <template>
-  <div>
-    <nuxt />
+  <div class="site-container">
+    <site-header />
+    <div id="content">
+      <nuxt />
+    </div>
+    <site-footer />
   </div>
 </template>
 
-<style>
+<script>
+import Header from '~/components/Header.vue'
+import Footer from '~/components/Footer.vue'
+export default {
+  components: { SiteHeader: Header, SiteFooter: Footer }
+}
+</script>
+
+<style lang="scss">
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
@@ -19,5 +31,14 @@ html {
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.site-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  #content {
+    flex: 1;
+  }
 }
 </style>

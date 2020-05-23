@@ -57,8 +57,9 @@ export default Vue.extend<{}, {}, Computed, {}>({
   components: {
     Carousel
   },
-  async fetch () {
-    await breedStore.loadBreed(+this.$route.params.id)
+  async asyncData ({ params }) {
+    await breedStore.loadBreed(+params.id)
+    return {}
   },
   computed: {
     breed () {
@@ -97,6 +98,10 @@ export default Vue.extend<{}, {}, Computed, {}>({
       font-size: 17px;
       & > div {
         margin-bottom: 10px;
+        span {
+          text-decoration: underline;
+          font-style: italic;
+        }
       }
     }
   }

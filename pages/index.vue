@@ -13,9 +13,10 @@ export default Vue.extend({
   components: {
     BreedList
   },
-  async fetch () {
+  async asyncData () {
     await breedStore.getTotal()
     await breedStore.getBreeds()
+    return {}
   },
   computed: {
     breeds: () => breedStore.breeds

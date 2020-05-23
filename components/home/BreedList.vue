@@ -52,8 +52,9 @@ export default Vue.extend<{}, Methods, Computed, {}>({
     }
   },
   methods: {
-    changePage (page: number) {
-      breedStore.changePage(page)
+    async changePage (page: number) {
+      await breedStore.changePage(page)
+      breedStore.loadImages()
     }
   }
 })
@@ -64,5 +65,8 @@ export default Vue.extend<{}, Methods, Computed, {}>({
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+  .content {
+    padding-bottom: 50px;
   }
 </style>
