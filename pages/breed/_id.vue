@@ -35,7 +35,14 @@
       </section>
       <section>
         <h2>Photos</h2>
-        <carousel v-if="breed.images" :items="breed.images.map(i => ({ alt: i.id, url: i.url }))" />
+        <carousel
+          :per-page="1"
+          navigationEnabled
+        >
+          <slide v-for="image of breed.images" class="carousel-item" :key="image.id">
+            <img :src="image.url" :alt="image.id">
+          </slide>
+        </carousel>
       </section>
     </div>
   </section>
@@ -44,7 +51,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { breedStore } from '~/utils/store-accessor'
-import Carousel from '~/components/breed/Carousel.vue'
 
 interface Computed {
   breed?: Breed,
@@ -53,9 +59,6 @@ interface Computed {
 
 export default Vue.extend<{}, {}, Computed, {}>({
   name: 'Breed',
-  components: {
-    Carousel
-  },
   async asyncData ({ params }) {
     await breedStore.loadBreed(+params.id)
     return {}
@@ -101,6 +104,15 @@ export default Vue.extend<{}, {}, Computed, {}>({
           text-decoration: underline;
           font-style: italic;
         }
+      }
+    }
+    .carousel-item {
+      position: relative;
+      margin: 0 auto;
+      img {
+        width: 100%;
+        height: 400px;
+        object-fit: contain;
       }
     }
   }

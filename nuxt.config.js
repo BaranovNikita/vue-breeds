@@ -37,12 +37,11 @@ module.exports = {
   },
   buildModules: ['@nuxt/typescript-build'],
   modules: [
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   axios: {},
-  plugins: ['~/plugins/axios'],
+  plugins: ['~/plugins/axios', { src: '~plugins/carousel', ssr: false }],
   env: {
     API_KEY: process.env.API_KEY
   }
 }
-
