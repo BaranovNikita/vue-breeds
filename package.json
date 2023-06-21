@@ -16,7 +16,7 @@
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@vue/composition-api": "^0.5.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^3.4.3",
     "vue-carousel": "^0.18.0",
     "vuex-module-decorators": "^0.17.0"
   },
